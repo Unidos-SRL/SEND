@@ -41,4 +41,4 @@ Per maggiori dettagli sull’integrazione con SEND, consultare la [documentazion
 
 ## 📞 Supporto
 
-Per supporto tecnico o segnalazione bug, apri una issue su GitHub o contatta il team IT all’indirizzo: `supporto@tuaazienda.it`.
+Per supporto tecnico o segnalazione bug, apri una issue su GitHub o contatta il team IT all’indirizzo: `assistenza@unidos.it`.
