@@ -33,6 +33,39 @@ Route::prefix('{cf_ente}/')->group(function () {
 });
 
 
+Route::get("/", function (){
+    $apiKey = env("API_KEY");
+    $url = env("API_URL_DEBUG");
+    $filePath = storage_path('app/uploads/pdf_test.pdf');
+    $fileContent = file_get_contents($filePath);
+    $encodedContent = base64_encode($fileContent);
+    $sha256 = hash("sha256", $fileContent);
+
+    $url = $url.'/delivery/attachments/preload';
+
+    $data = [
+        "contentType" => "application/pdf",
+        "content" => $encodedContent,
+        "sha256" => $sha256
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'x-api-key: ' . $apiKey
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    // Mostra output
+    echo "HTTP Code: $httpCode\n";
+    echo "Risposta:\n$response\n";
+});
+
 
 //Route::get('/{cf_ente}/profile', function ($cf) {
 //    return open_view($cf, "profile");
